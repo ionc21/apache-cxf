@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<!-- Spring's component scan for identifying beans to be managed by the 
+		container. -->
+	<context:component-scan base-package="com.pgs.orders" />
+
+	<bean id="defaultOrdersEndpoint" class="com.pgs.orders.DefaultOrdersEndpoint" />
+
+	<!-- Custom interceptors for handling the outbound client soap header enhancement and 
+		reading the inbound soap header on the server -->
+	<bean id="orderServiceSoapHeaderInInterceptor"
+		class="com.pgs.orders.OrderServiceSoapHeaderInInterceptor" />
+	<bean id="orderServiceSoapHeaderOutInterceptor"
+		class="com.pgs.orders.OrderServiceSoapHeaderOutInterceptor" /> 
+		
+	<!-- CXF JAX-WS server configuration -->
+	<jaxws:server id="testOrdersServer"
+		address="http://localhost:9000/apache-cxf-jaxws-server/services/orders"
+		serviceBean="#defaultOrdersEndpoint" serviceClass="com.pgs.service.orders.Orders">
+		<jaxws:inInterceptors>
+			<ref bean="loggingInInterceptor" />
+			<ref bean="orderServiceSoapHeaderInInterceptor" />
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="loggingOutInterceptor" />
+		</jaxws:outInterceptors>
+	</jaxws:server>
+
+	<!-- Logging interceptors to log inbound and outbound messages -->
+	<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+
+	<!-- CXF JAX-WS client configuration. -->
+	<jaxws:client id="testOrdersClient"
+		address="http://localhost:9000/apache-cxf-jaxws-server/services/orders"
+		serviceClass="com.pgs.service.orders.Orders">
+		<jaxws:inInterceptors>
+			<ref bean="loggingInInterceptor" />
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="loggingOutInterceptor" />
+			<ref bean="orderServiceSoapHeaderOutInterceptor" />
+		</jaxws:outInterceptors>
+	</jaxws:client>
+</beans>
