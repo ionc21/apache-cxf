@@ -12,12 +12,12 @@
         <context:component-scan base-package="com.pgs.orders" />
 
        <jaxws:endpoint id="orders" implementor="com.pgs.orders.DefaultOrdersEndpoint" address="/services/orders">
-       <!-- 	  <jaxws:inInterceptors>
+       	  <jaxws:inInterceptors>
        	  	<ref bean="orderServiceSoapHeaderInInterceptor" />
-       	  </jaxws:inInterceptors>  -->
+       	  </jaxws:inInterceptors> 
        </jaxws:endpoint>
        
        <bean id="orderServiceSoapHeaderInInterceptor" class="com.pgs.orders.OrderServiceSoapHeaderInInterceptor" />
-       <!-- <bean id="orderServiceSoapHeaderOutInterceptor" class="com.pgs.orders.OrderServiceSoapHeaderOutInterceptor" /> -->
+       
           
 </beans>
