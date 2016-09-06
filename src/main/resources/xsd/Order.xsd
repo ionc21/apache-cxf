@@ -38,7 +38,7 @@
 	<xsd:complexType name="OrderItemType">
 		<xsd:sequence>
 			<xsd:element name="lineNumber" minOccurs="1" maxOccurs="1" type="xsd:int" />
-			<xsd:element name="expextedShipingDate" minOccurs="0" maxOccurs="1" type="xsd:date" />
+			<xsd:element name="expectedShipingDate" minOccurs="0" maxOccurs="1" type="xsd:date" />
 			<xsd:element name="book" minOccurs="1" maxOccurs="1" type="tns:BookType" />
 			<xsd:element name="price" minOccurs="1" maxOccurs="1" type="xsd:decimal" />
 			<xsd:element name="quantityShipped" minOccurs="1" maxOccurs="1" type="xsd:int" />
