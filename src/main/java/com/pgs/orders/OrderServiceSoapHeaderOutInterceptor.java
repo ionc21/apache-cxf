@@ -8,13 +8,15 @@ import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
 import org.apache.cxf.binding.soap.interceptor.SoapOutInterceptor;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.jaxb.JAXBDataBinding;
+import org.apache.cxf.phase.Phase;
 
 public class OrderServiceSoapHeaderOutInterceptor extends AbstractSoapInterceptor {
 	public OrderServiceSoapHeaderOutInterceptor() {
-		super("write");
+		super(Phase.WRITE);
 		addBefore(SoapOutInterceptor.class.getName());
 	}
 
+	@Override
 	public void handleMessage(SoapMessage message) throws Fault {
 		QName qname = new QName("http://www.pluralsight.com/service/Orders/", "apikey");
 

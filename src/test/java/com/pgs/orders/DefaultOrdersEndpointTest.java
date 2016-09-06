@@ -23,15 +23,13 @@ import com.pgs.service.orders.Orders;
  * contains two test methods. The first is a success scenario that executes a
  * happy path test of the orders web service. The second is an exception test.
  * It tests the failure scenario when a null input is passed by the client.
- * 
+ *
  * @author Michael Hoffman, Pluralsight
- * 
+ *
  */
 // The @RunWith annotation tells jUnit to use the Spring jUnit 4 test runner for
 // exection of the tests.
 @RunWith(SpringJUnit4ClassRunner.class)
-// The @ContextConfiguration annotation provides the classpath to the test
-// spring configuration file.
 @ContextConfiguration({ "classpath:test-beans.xml" })
 public class DefaultOrdersEndpointTest {
 
@@ -46,16 +44,10 @@ public class DefaultOrdersEndpointTest {
 	@Autowired
 	private JaxWsProxyFactoryBean testOrdersClient;
 
-	// @Before indicates the method should be run prior to every test in the
-	// class.
 	@Before
 	public void setUp() throws Exception {
-		// Initialize the orders web service using the JaxWsProxyFactoryBean
-		// class's create method. Pass in the Orders class to avoid having to cast
-		// the resulting object.
 		ordersService = testOrdersClient.create(Orders.class);
 
-		// Initialize the request type
 		ObjectFactory factory = new ObjectFactory();
 		orderInquiryType = factory.createOrderInquiryType();
 		orderInquiryType.setAccountId(999);
@@ -65,7 +57,6 @@ public class DefaultOrdersEndpointTest {
 
 	}
 
-	// @After indicates the method should be run after every test in the class.
 	@After
 	public void tearDown() throws Exception {
 	}
@@ -85,7 +76,7 @@ public class DefaultOrdersEndpointTest {
 
 	/**
 	 * Exception test for a failed execution of the orders web service.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	// @Test(expected) indicates that an exception is expected to be thrown from
